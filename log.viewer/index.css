@@ -1,0 +1,171 @@
+body{
+    background-color: #f3f3f3;
+}
+
+form {/*表单*/
+    width: 100%;
+}
+
+#control{/*设置面板*/
+    background-color: white;
+}
+
+tr{
+    height: 40px;/*表格行高*/
+}
+
+td {
+    border: 1px solid gainsboro;/*表格边框*/
+}
+
+tr td:first-child{
+    text-align: left;/*日志路径左对齐*/
+}
+
+tr:first-child{/*表头样式*/
+    background-color: #178173;
+    color:white;
+}
+
+tr{/*表格第一行表头文字居中*/
+    text-align: center;
+}
+
+tr:first-child > td:first-child{/*表格第一个表头文字居中*/
+    text-align: center;
+}
+
+caption{/*表格标题样式*/
+    font-size: 28px;
+    font-weight: bolder;
+}
+
+[type=reset]{/*重新设置 按钮隐藏*/
+    visibility: hidden;
+}
+
+#input_reset{/*重新设置 文本样式*/
+    font-size: 18px;
+    color:#178272;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+button{/*按钮样式*/
+    background-color: #f8f9fb;
+    border: 1px solid #e1e2e4;
+    padding: 3px 10px;
+}
+
+[type=text],[type=number]{/*起始部分和起始索引*/
+    height: 27px;
+    border: 0;
+}
+
+[type=number]{/*起始索引文本框*/
+    width: 90%;
+}
+
+table [type=text]{/*文本框背景色*/
+    background-color: #f8f9fb;
+}
+
+.from,.percent{/*单元格背景色*/
+    background-color: #f8f9fb;
+}
+
+[type=color]{/*颜色选择器*/
+    width: 70px;
+}
+
+p button {
+    width: 170px;
+}
+
+#color_code{/*颜色代码*/
+    width: 75px;
+}
+
+textarea{/*富文本框*/
+    width: 100%;
+    height: 120px;
+    font-size: 18px;
+    margin-bottom:20px;
+}
+
+#panel_box{
+    padding: 0 20px 0;
+}
+
+.percentage{/*进度条*/
+    width: 0%;
+    height: 27px;
+    background-color: #fbc773;
+}
+
+#panel >*{/*一排控件的间距*/
+    margin-right: 20px;
+}
+
+/************************************************************/
+
+fieldset{/*日志显示区域*/
+    background-color: white;
+    border: 0;
+}
+
+.box1 {/*日志大框*/
+    position: relative;
+    padding: 2px;
+    margin: 30px 5px 20px 80px;
+    border: 1px solid lightgrey;
+}
+
+.btn1{
+    position: absolute;
+    top: -10px;
+    left: -80px;
+    background-image: url("img/close.png");
+    width: 76px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.box2 {/*日志小框*/
+    position: relative;
+    padding: 2px;
+    margin: 40px 5px 20px 10px;
+    border: 1px solid lightgrey;
+}
+
+.content{
+    background-color: #f3f3f3;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.btn2{
+    position: absolute;
+    top: -30px;
+    left: -1px;
+    background-image: url("img/close2.png");
+    width: 76px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.box2:first-of-type .content{/*日志内容样式*/
+    color: red;
+}
+.box2:nth-of-type(2) .content{/*日志内容样式*/
+    color: blue;
+}
+.box2:nth-of-type(3) .content{/*日志内容样式*/
+    color: purple;
+}
+.box2:nth-of-type(4) .content{/*日志内容样式*/
+    color: darkgreen;
+}
+.box2:last-of-type .content{/*日志内容样式*/
+    color: deeppink;
+}
