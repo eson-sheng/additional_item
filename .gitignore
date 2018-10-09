@@ -1,2 +1,5 @@
 # phpstorm
 .idea
+
+# 配置目录文件
+/log.viewer/logs.php
