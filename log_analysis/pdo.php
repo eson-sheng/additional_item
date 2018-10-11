@@ -6,7 +6,7 @@ class PDOModel
 {
     private $PDO;
 
-    function __construct()
+    function __construct ()
     {
         try {
             $options = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'", PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING];
@@ -18,16 +18,16 @@ class PDOModel
             $pwd = $g_config['pwd'];
             $this->PDO = new PDO("mysql:host=$host; port=$port; dbname=$dbname", $user, $pwd, $options);
         } catch (PDOException $e) {
-            die( "数据库连接失败。" .$e->getMessage());
+            die("数据库连接失败。" . $e->getMessage());
         }
     }
 
-    function __destruct()
+    function __destruct ()
     {
         $this->PDO = null;
     }
 
-    function index()
+    function index ()
     {
         return $this->PDO;
     }
@@ -37,29 +37,33 @@ class PDOModel
      * @param $sql 要执行的SQL语句
      * @return PDOStatement
      * */
-    public function query($sql){
+    public function query ($sql)
+    {
         return $this->PDO->query($sql);
     }
+
     /*
      * @describe 执行增、删、改
      * @param $sql 要执行的SQL语句
      * @return 返回受影响的行数
      * */
-    public function execute($sql){
+    public function execute ($sql)
+    {
         return $this->PDO->exec($sql);
     }
+
     /*
      * @describe 测试与教程
      * */
-    public function Test()
+    public function Test ()
     {
         echo '<hr />';
 
         $pdo_statement = $this->PDO->query('show databases;');
 //        $pdo_statement = $this->PDO->query('select * from `profiles`;');
 
-        echo '查询结果的列数：',$pdo_statement->columnCount(),'<br />';
-        echo '查询结果的行数：',$pdo_statement->rowCount();
+        echo '查询结果的列数：', $pdo_statement->columnCount(), '<br />';
+        echo '查询结果的行数：', $pdo_statement->rowCount();
 
         //取法1：数字与关联的键名和键值
 //        foreach ($pdo_statement as $row){
