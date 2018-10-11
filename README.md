@@ -27,8 +27,8 @@
         charset utf-8,gbk;
     }
 
-    access_log  /home/wwwlogs/additional_item.log;
-    error_log    /home/wwwlogs/additional_item.error.log;
+    access_log  /home/www/wwwlogs/additional_item.log;
+    error_log   /home/www/wwwlogs/additional_item.error.log;
 }
  ```
  
