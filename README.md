@@ -3,6 +3,35 @@
 `git@47.97.186.229:eson/additional_item.git`
 
 ## 部署步骤
+ - 配置web服务 可参考如下nginx配置：
+ 
+```conf
+ server {
+    charset utf-8;
+    client_max_body_size 128M;
+    listen 80;
+    server_name additional_item;
+
+    include enable-php.conf;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+    root   /home/www/additional_item;
+    index  index.php index.html;
+
+    location / {
+        # auth_basic "请输入用户名和密码";
+        # auth_basic_user_file /usr/local/nginx/passwd.db;
+        autoindex on;
+        autoindex_exact_size off;
+        autoindex_localtime off;
+        charset utf-8,gbk;
+    }
+
+    access_log  /home/wwwlogs/additional_item.log;
+    error_log    /home/wwwlogs/additional_item.error.log;
+}
+ ```
+ 
  - 在`mynote`数据库中执行`./additional_item/log_analysis/sql/create.sql`
  - 配置文件添加修改:
  
