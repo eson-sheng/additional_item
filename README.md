@@ -94,3 +94,14 @@ $paths = [
 
 $read_size = 50000;
 ```
+
+3 . `./additional_item/config_my.php`
+```shell
+cd ./additional_item
+vim config_my.php
+``` 
+内容示例：
+```php
+<?php
+$g_config["pwd"] = "***";
+```

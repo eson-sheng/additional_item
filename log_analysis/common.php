@@ -2,8 +2,8 @@
 $ct_log_path = __DIR__ . "/ana_one.log";
 
 include_once 'pdo.php';
-include_once __DIR__ . "/../../mynote/basic/config/config.php";
-include_once __DIR__ . "/../../mynote/basic/common.php";
+include_once __DIR__ . '/../config.php';
+include_once __DIR__ . '/../common.php';
 CT_log(get_safe($_REQUEST, "REQUEST_URI", ""));
 
 $begin = get_time();

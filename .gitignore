@@ -3,3 +3,4 @@
 
 # 配置目录文件
 /log.viewer/logs.php
+config_my.php

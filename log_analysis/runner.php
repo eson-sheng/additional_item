@@ -1,7 +1,7 @@
 <?php
 
 $ct_log_path = __DIR__ . "/ana_all.log";
-require __DIR__ . '/../../mynote/basic/common.php';
+require __DIR__ . '/../common.php';
 $begin = get_time();
 $items = [];
 
