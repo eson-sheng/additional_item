@@ -53,7 +53,7 @@ function my_call_user_func_array_safe($function, $args = array()) {
 }
 
 
-class test_call_user_class {
+class test_call_user_func {
   function test_call_user_func($test_func = 'foo',
                                $arg1      = 'user_func test') {
     call_user_func($test_func, $arg1);
@@ -96,8 +96,7 @@ echo "\n";
 // 2a: Sanity test ignoring call_user_func
 echo "Part 2a: Ignore call_user_func\n";
 xhprof_enable(0, $xhprof_ignored_functions);
-$indirect_foo = new test_call_user_class();
-$indirect_foo->test_call_user_func('foo');
+$indirect_foo = new test_call_user_func('foo');
 $output = xhprof_disable();
 echo "Part 2a output:\n";
 print_canonical($output);
@@ -106,8 +105,7 @@ echo "\n";
 // 2b: Confirm that profiling without parameters still works
 echo "Part 2b: Standard profile without parameters\n";
 xhprof_enable();
-$indirect_foo = new test_call_user_class();
-$indirect_foo->test_call_user_func('foo');
+$indirect_foo = new test_call_user_func('foo');
 $output = xhprof_disable();
 echo "Part 2b output:\n";
 print_canonical($output);
@@ -116,8 +114,7 @@ echo "\n";
 // 2c: Confirm that empty array of ignored functions works
 echo "Part 2c: Standard profile with empty array of ignored functions\n";
 xhprof_enable(0, array());
-$indirect_foo = new test_call_user_class();
-$indirect_foo->test_call_user_func('foo');
+$indirect_foo = new test_call_user_func('foo');
 $output = xhprof_disable();
 echo "Part 2c output:\n";
 print_canonical($output);
@@ -164,7 +161,8 @@ echo "\n";
 
 // 5c: Sanity test to only ignore my_call_user_func_array_safe
 echo "Part 5c: Only ignore call_user_func_array\n";
-$xhprof_ignored_functions = array('ignored_functions' => 'my_call_user_func_array_safe');
+$xhprof_ignored_functions = array('ignored_functions' =>
+                                  'my_call_user_func_array_safe');
 xhprof_enable(XHPROF_FLAGS_MEMORY, $xhprof_ignored_functions);
 test_my_call_user_func_array_safe('foo_array');
 $output = xhprof_disable();
@@ -179,7 +177,9 @@ hello: this is a test
 hello: Arraytest
 Part 1 output:
 foo==>bar                               : ct=       2; wt=*;
+foo==>strlen                            : ct=       1; wt=*;
 foo_array==>bar                         : ct=       2; wt=*;
+foo_array==>strlen                      : ct=       1; wt=*;
 main()                                  : ct=       1; wt=*;
 main()==>foo                            : ct=       1; wt=*;
 main()==>foo_array                      : ct=       1; wt=*;
@@ -189,33 +189,39 @@ Part 2a: Ignore call_user_func
 hello: user_func test
 Part 2a output:
 foo==>bar                               : ct=       2; wt=*;
+foo==>strlen                            : ct=       1; wt=*;
 main()                                  : ct=       1; wt=*;
-main()==>test_call_user_class::test_call_user_func: ct=       1; wt=*;
+main()==>test_call_user_func::test_call_user_func: ct=       1; wt=*;
 main()==>xhprof_disable                 : ct=       1; wt=*;
-test_call_user_class::test_call_user_func==>foo: ct=       1; wt=*;
+test_call_user_func::test_call_user_func==>foo: ct=       1; wt=*;
 
 Part 2b: Standard profile without parameters
 hello: user_func test
 Part 2b output:
+call_user_func==>foo                    : ct=       1; wt=*;
 foo==>bar                               : ct=       2; wt=*;
+foo==>strlen                            : ct=       1; wt=*;
 main()                                  : ct=       1; wt=*;
-main()==>test_call_user_class::test_call_user_func: ct=       1; wt=*;
+main()==>test_call_user_func::test_call_user_func: ct=       1; wt=*;
 main()==>xhprof_disable                 : ct=       1; wt=*;
-test_call_user_class::test_call_user_func==>foo: ct=       1; wt=*;
+test_call_user_func::test_call_user_func==>call_user_func: ct=       1; wt=*;
 
 Part 2c: Standard profile with empty array of ignored functions
 hello: user_func test
 Part 2c output:
+call_user_func==>foo                    : ct=       1; wt=*;
 foo==>bar                               : ct=       2; wt=*;
+foo==>strlen                            : ct=       1; wt=*;
 main()                                  : ct=       1; wt=*;
-main()==>test_call_user_class::test_call_user_func: ct=       1; wt=*;
+main()==>test_call_user_func::test_call_user_func: ct=       1; wt=*;
 main()==>xhprof_disable                 : ct=       1; wt=*;
-test_call_user_class::test_call_user_func==>foo: ct=       1; wt=*;
+test_call_user_func::test_call_user_func==>call_user_func: ct=       1; wt=*;
 
 Part 3: Ignore call_user_func_array
 hello: calling foo_array
 Part 3 output:
 foo_array==>bar                         : cpu=*; ct=       2; wt=*;
+foo_array==>strlen                      : cpu=*; ct=       1; wt=*;
 main()                                  : cpu=*; ct=       1; wt=*;
 main()==>test_call_user_func_array      : cpu=*; ct=       1; wt=*;
 main()==>xhprof_disable                 : cpu=*; ct=       1; wt=*;
@@ -225,6 +231,7 @@ Part 4: Ignore my_call_user_func_safe
 hello: Array
 Part 4 output:
 foo==>bar                               : ct=       2; wt=*;
+foo==>strlen                            : ct=       1; wt=*;
 main()                                  : ct=       1; wt=*;
 main()==>test_my_call_user_func_safe    : ct=       1; wt=*;
 main()==>xhprof_disable                 : ct=       1; wt=*;
@@ -244,20 +251,24 @@ test_my_call_user_func_array_safe==>is_callable: ct=       1; mu=*; pmu=*; wt=*;
 Part 5b: Profile call_user_func_array and my_call_user_func_array_safe
 hello: my_user_func_array_safetest
 Part 5b output:
+call_user_func_array==>foo_array        : ct=       1; mu=*; pmu=*; wt=*;
 foo_array==>bar                         : ct=       2; mu=*; pmu=*; wt=*;
+foo_array==>strlen                      : ct=       1; mu=*; pmu=*; wt=*;
 main()                                  : ct=       1; mu=*; pmu=*; wt=*;
 main()==>test_my_call_user_func_array_safe: ct=       1; mu=*; pmu=*; wt=*;
 main()==>xhprof_disable                 : ct=       1; mu=*; pmu=*; wt=*;
-my_call_user_func_array_safe==>foo_array: ct=       1; mu=*; pmu=*; wt=*;
+my_call_user_func_array_safe==>call_user_func_array: ct=       1; mu=*; pmu=*; wt=*;
 my_call_user_func_array_safe==>is_callable: ct=       1; mu=*; pmu=*; wt=*;
 test_my_call_user_func_array_safe==>my_call_user_func_array_safe: ct=       1; mu=*; pmu=*; wt=*;
 
 Part 5c: Only ignore call_user_func_array
 hello: my_user_func_array_safetest
 Part 5c output:
+call_user_func_array==>foo_array        : ct=       1; mu=*; pmu=*; wt=*;
 foo_array==>bar                         : ct=       2; mu=*; pmu=*; wt=*;
+foo_array==>strlen                      : ct=       1; mu=*; pmu=*; wt=*;
 main()                                  : ct=       1; mu=*; pmu=*; wt=*;
 main()==>test_my_call_user_func_array_safe: ct=       1; mu=*; pmu=*; wt=*;
 main()==>xhprof_disable                 : ct=       1; mu=*; pmu=*; wt=*;
-test_my_call_user_func_array_safe==>foo_array: ct=       1; mu=*; pmu=*; wt=*;
+test_my_call_user_func_array_safe==>call_user_func_array: ct=       1; mu=*; pmu=*; wt=*;
 test_my_call_user_func_array_safe==>is_callable: ct=       1; mu=*; pmu=*; wt=*;
