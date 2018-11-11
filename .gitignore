@@ -2,8 +2,10 @@
 .idea
 
 # 配置目录文件
-/log.viewer/logs.php
+/logviewer/logs.php
 config_my.php
 
 # 零时日志文件
 /log_analysis/*.log
+
+*.my.php
