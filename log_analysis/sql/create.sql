@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `mynote_request` (
   `reqnum` varchar(20) DEFAULT NULL,
   `uri` varchar(1024) DEFAULT NULL,
   `sessionid` varchar(40) DEFAULT NULL,
-  `params` text,
+  `params` longtext,
   `time` varchar(20) DEFAULT NULL,
   `req_time` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
