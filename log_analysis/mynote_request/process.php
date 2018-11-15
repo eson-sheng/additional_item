@@ -23,6 +23,13 @@ for ($i = 0; $i < $countLines; $i++) {
     }
 //    var_dump($data);die;
 
+    /*修改时间字段为人性化显示*/
+    if (!empty($data['req_time'])) {
+        $tmp_time_arr = explode(".", $data['req_time']);
+        $t = date("Y-m-d H:i:s", intval($tmp_time_arr[0]));
+        $data['req_time'] = trim($t . " " . $tmp_time_arr[1]);
+    }
+
     if (empty($data['time'])) {
         $M->execute("insert into `$tbname`(`reqnum`,`uri`,`sessionid`,`params`,`req_time`) ".
             "values('{$data['rnum']}','{$data["REQUEST_URI"]}','{$data['PHPSESSID']}','{$data['params']}','{$data['req_time']}');");

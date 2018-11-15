@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS `mynote_log`;
 CREATE TABLE IF NOT EXISTS `mynote_log` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `datetime` varchar(15) DEFAULT NULL,
+  `datetime` varchar(30) DEFAULT NULL,
   `level` tinyint(4) DEFAULT NULL,
   `class` varchar(50) DEFAULT NULL,
   `filename` varchar(100) DEFAULT NULL,

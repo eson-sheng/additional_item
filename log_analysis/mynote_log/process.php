@@ -10,6 +10,10 @@ for ($i = 0; $i < $countLines; $i++) {
     }
     $peices = explode('-||-', $line);
     if (strpos($line,'-||-') !== false) { //是数据首行
+        /*修改时间字段为人性化显示*/
+        $tmp_time_arr = explode(".", $peices[0]);
+        $t = date("Y-m-d H:i:s", intval($tmp_time_arr[0]));
+        $peices[0] = trim($t . " " . $tmp_time_arr[1]);
         switch (trim($peices[1])) {
             case 'DEBUG':
                 $peices[1] = 8;

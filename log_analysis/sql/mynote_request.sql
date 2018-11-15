@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS `mynote_request` (
   `uri` varchar(1024) DEFAULT NULL,
   `sessionid` varchar(40) DEFAULT NULL,
   `params` longtext,
-  `time` varchar(20) DEFAULT NULL,
-  `req_time` varchar(20) NOT NULL
+  `time` varchar(30) DEFAULT NULL,
+  `req_time` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `mynote_request`
