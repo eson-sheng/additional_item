@@ -1,0 +1,22 @@
+* {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.rizhi {
+    overflow: auto;
+    word-break: break-all;
+    padding: 0;
+}
+
+th, td {
+    width: 300px;
+}
+
+td p {
+    max-height: 200px;
+}
+
+.tip {
+    background-color: yellow;
+}
