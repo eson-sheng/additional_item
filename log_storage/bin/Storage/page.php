@@ -10,13 +10,13 @@ namespace Storage;
 
 class page
 {
-    private $myde_total;          //总记录数
-    private $myde_size;           //一页显示的记录数
-    private $myde_page;           //当前页
-    private $myde_page_count;     //总页数
-    private $myde_i;              //起头页数
-    private $myde_en;             //结尾页数
-    private $myde_url;            //获取当前的url
+    private $total;          //总记录数
+    private $size;           //一页显示的记录数
+    private $page;           //当前页
+    private $page_count;     //总页数
+    private $start_page;              //起头页数
+    private $end_page;             //结尾页数
+    private $url;            //获取当前的url
     /*
      * $show_pages
      * 页面显示的格式，显示链接的页数为2*$show_pages+1。
@@ -24,34 +24,34 @@ class page
      */
     private $show_pages;
 
-    public function __construct ($myde_total = 1, $myde_size = 1, $myde_page = 1, $myde_url, $show_pages = 2)
+    public function __construct ($total = 1, $size = 1, $page = 1, $url, $show_pages = 2)
     {
-        $this->myde_total = $this->numeric($myde_total);
-        $this->myde_size = $this->numeric($myde_size);
-        $this->myde_page = $this->numeric($myde_page);
-        $this->myde_page_count = ceil($this->myde_total / $this->myde_size);
-        $this->myde_url = $myde_url;
-        if ($this->myde_total < 0)
-            $this->myde_total = 0;
-        if ($this->myde_page < 1)
-            $this->myde_page = 1;
-        if ($this->myde_page_count < 1)
-            $this->myde_page_count = 1;
-        if ($this->myde_page > $this->myde_page_count)
-            $this->myde_page = $this->myde_page_count;
-        $this->limit = ($this->myde_page - 1) * $this->myde_size;
-        $this->myde_i = $this->myde_page - $show_pages;
-        $this->myde_en = $this->myde_page + $show_pages;
-        if ($this->myde_i < 1) {
-            $this->myde_en = $this->myde_en + (1 - $this->myde_i);
-            $this->myde_i = 1;
+        $this->total = $this->numeric($total);
+        $this->size = $this->numeric($size);
+        $this->page = $this->numeric($page);
+        $this->page_count = ceil($this->total / $this->size);
+        $this->url = $url;
+        if ($this->total < 0)
+            $this->total = 0;
+        if ($this->page < 1)
+            $this->page = 1;
+        if ($this->page_count < 1)
+            $this->page_count = 1;
+        if ($this->page > $this->page_count)
+            $this->page = $this->page_count;
+        $this->limit = ($this->page - 1) * $this->size;
+        $this->start_page = $this->page - $show_pages;
+        $this->end_page = $this->page + $show_pages;
+        if ($this->start_page < 1) {
+            $this->end_page = $this->end_page + (1 - $this->start_page);
+            $this->start_page = 1;
         }
-        if ($this->myde_en > $this->myde_page_count) {
-            $this->myde_i = $this->myde_i - ($this->myde_en - $this->myde_page_count);
-            $this->myde_en = $this->myde_page_count;
+        if ($this->end_page > $this->page_count) {
+            $this->start_page = $this->start_page - ($this->end_page - $this->page_count);
+            $this->end_page = $this->page_count;
         }
-        if ($this->myde_i < 1)
-            $this->myde_i = 1;
+        if ($this->start_page < 1)
+            $this->start_page = 1;
     }
 
     //检测是否为数字
@@ -72,13 +72,13 @@ class page
     //地址替换
     private function page_replace ($page)
     {
-        return str_replace("{page}", $page, $this->myde_url);
+        return str_replace("{page}", $page, $this->url);
     }
 
     //首页
     private function myde_home ()
     {
-        if ($this->myde_page != 1) {
+        if ($this->page != 1) {
             return "<a href='" . $this->page_replace(1) . "' title='首页'>首页</a>";
         } else {
             return "<span>首页</span>";
@@ -88,8 +88,8 @@ class page
     //上一页
     private function myde_prev ()
     {
-        if ($this->myde_page != 1) {
-            return "<a href='" . $this->page_replace($this->myde_page - 1) . "' title='上一页'>上一页</a>";
+        if ($this->page != 1) {
+            return "<a href='" . $this->page_replace($this->page - 1) . "' title='上一页'>上一页</a>";
         } else {
             return "<span>上一页</span>";
         }
@@ -98,8 +98,8 @@ class page
     //下一页
     private function myde_next ()
     {
-        if ($this->myde_page != $this->myde_page_count) {
-            return "<a href='" . $this->page_replace($this->myde_page + 1) . "' title='下一页'>下一页</a>";
+        if ($this->page != $this->page_count) {
+            return "<a href='" . $this->page_replace($this->page + 1) . "' title='下一页'>下一页</a>";
         } else {
             return "<span>下一页</span>";
         }
@@ -108,8 +108,8 @@ class page
     //尾页
     private function myde_last ()
     {
-        if ($this->myde_page != $this->myde_page_count) {
-            return "<a href='" . $this->page_replace($this->myde_page_count) . "' title='尾页'>尾页</a>";
+        if ($this->page != $this->page_count) {
+            return "<a href='" . $this->page_replace($this->page_count) . "' title='尾页'>尾页</a>";
         } else {
             return "<span>尾页</span>";
         }
@@ -121,23 +121,23 @@ class page
         $str = "<div id=" . $id . ">";
         $str .= $this->myde_home();
         $str .= $this->myde_prev();
-        if ($this->myde_i > 1) {
+        if ($this->start_page > 1) {
             $str .= "<span class='pageEllipsis'>...</span>";
         }
-        for ($i = $this->myde_i; $i <= $this->myde_en; $i++) {
-            if ($i == $this->myde_page) {
+        for ($i = $this->start_page; $i <= $this->end_page; $i++) {
+            if ($i == $this->page) {
                 $str .= "<a href='" . $this->page_replace($i) . "' title='第" . $i . "页' class='cur'>$i</a>";
             } else {
                 $str .= "<a href='" . $this->page_replace($i) . "' title='第" . $i . "页'>$i</a>";
             }
         }
-        if ($this->myde_en < $this->myde_page_count) {
+        if ($this->end_page < $this->page_count) {
             $str .= "<span class='pageEllipsis'>...</span>";
         }
         $str .= $this->myde_next();
         $str .= $this->myde_last();
-        $str .= "<span class='pageRemark'>共<b>" . $this->myde_page_count .
-            "</b>页<b>" . $this->myde_total . "</b>条数据</span>";
+        $str .= "<span class='pageRemark'>共<b>" . $this->page_count .
+            "</b>页<b>" . $this->total . "</b>条数据</span>";
         $str .= "</div>";
         return $str;
     }
