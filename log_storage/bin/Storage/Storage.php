@@ -188,6 +188,12 @@ class Storage
         /*获取页面数据*/
         $data = $this->_get_data($data_for_sql);
 
+        /*获取显示功能提示的html*/
+        ob_start();
+        require_once __DIR__ . "/view/ful.php";
+        $ful_html = ob_get_contents();
+        ob_end_clean();
+
         /*获取panel-heading的html*/
         ob_start();
         require_once __DIR__ . "/view/heading.php";
@@ -203,7 +209,7 @@ class Storage
         ob_end_clean();
 
         /*消除资源*/
-        unset($page_html, $data, $panel_html);
+        unset($page_html, $data, $panel_html,$ful_html);
 
         echo $html;
     }
