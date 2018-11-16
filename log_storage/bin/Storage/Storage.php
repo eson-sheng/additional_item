@@ -47,7 +47,6 @@ class Storage
     /*查询$request_max_id*/
     private $request_max_id = null;
 
-
     /**
      * Storage constructor.
      * @param $config
@@ -72,6 +71,34 @@ class Storage
         $this->default_time = intval(time()) - 1800;
         $this->default_time_show = date("Y-m-d H:i:s", intval($this->default_time));
         $this->log_datetime_start = " AND r.req_time > \"{$this->default_time_show}\" ";
+
+        /*不加入th的字段*/
+        $this->field_arr = [
+            '记录内容',
+            'r主键ID',
+            'GET参数',
+            '请求编号',
+            '用户账号',
+            'api请求URL',
+            '代码方法名',
+            '用户昵称',
+            '用户ID',
+            '请求消耗时间',
+            '请求时间',
+        ];
+
+        /*单独显示的一行*/
+        $this->online_arr = [
+            'r主键ID',
+            '请求id',
+            '请求编号',
+            '用户账号',
+            '用户昵称',
+            '用户ID',
+            'api请求URL',
+            '请求消耗时间',
+            '请求时间',
+        ];
 
         if (empty($_GET)) {
             return TRUE;
@@ -138,37 +165,12 @@ class Storage
             $this->log_message = " AND log.message LIKE '%{$this->message}%' ";
         }
 
-        /*不加入th的字段*/
-        $this->field_arr = [
-            '记录内容',
-            'r主键ID',
-            'GET参数',
-            '请求编号',
-            '用户账号',
-            'api请求URL',
-            '代码方法名',
-            '用户昵称',
-            '用户ID',
-            '请求消耗时间',
-            '请求时间',
-        ];
-
-        /*单独显示的一行*/
-        $this->online_arr = [
-            'r主键ID',
-            '请求id',
-            '请求编号',
-            '用户账号',
-            '用户昵称',
-            '用户ID',
-            'api请求URL',
-            '请求消耗时间',
-            '请求时间'
-        ];
-
         return TRUE;
     }
 
+    /**
+     * 入口方法
+     */
     public function index ()
     {
         /*查询所有页面的总条数*/
@@ -200,9 +202,15 @@ class Storage
         $html = ob_get_contents();
         ob_end_clean();
 
+        /*消除资源*/
+        unset($page_html, $data, $panel_html);
+
         echo $html;
     }
 
+    /**
+     * @return string
+     */
     private function _get_all_pages_for_sql ()
     {
         return "
@@ -229,6 +237,9 @@ class Storage
         ";
     }
 
+    /**
+     * @return string
+     */
     private function _get_data_for_sql ()
     {
         return "
@@ -281,6 +292,10 @@ class Storage
         ";
     }
 
+    /**
+     * @param $sql
+     * @return string
+     */
     private function _get_page_html ($sql)
     {
         $query = $this->_db->prepare($sql);
@@ -322,6 +337,10 @@ class Storage
         return $page->myde_write();
     }
 
+    /**
+     * @param $sql
+     * @return array
+     */
     private function _get_data ($sql)
     {
         $query = $this->_db->prepare($sql);
@@ -330,6 +349,9 @@ class Storage
         return $data;
     }
 
+    /**
+     * @return mixed
+     */
     private function _get_request_max_id ()
     {
         $sql = $this->_get_request_max_id_for_sql();
@@ -340,6 +362,9 @@ class Storage
         return $request_max_id;
     }
 
+    /**
+     * @return string
+     */
     private function _get_request_max_id_for_sql ()
     {
         return "SELECT MAX(id) FROM mynote_request;";

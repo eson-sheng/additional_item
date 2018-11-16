@@ -81,7 +81,7 @@
                                     开始
                                     <input type="datetime-local" name="log_datetime_start" id="log_datetime_start"
                                            class="form-control"
-                                           value="<?= !empty($_GET['log_datetime_start']) ? $_GET['log_datetime_start'] : $this->default_time_show; ?>">
+                                           value="<?= !empty($_GET['log_datetime_start']) ? $_GET['log_datetime_start'] : date("Y-m-d\TH:i",intval($this->default_time)); ?>">
                                     截止
                                     <input type="datetime-local" name="log_datetime_end" id="log_datetime_end"
                                            class="form-control"
