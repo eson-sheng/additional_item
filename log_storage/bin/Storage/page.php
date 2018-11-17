@@ -76,7 +76,7 @@ class page
     }
 
     //首页
-    private function myde_home ()
+    private function home ()
     {
         if ($this->page != 1) {
             return "<a href='" . $this->page_replace(1) . "' title='首页'>首页</a>";
@@ -86,7 +86,7 @@ class page
     }
 
     //上一页
-    private function myde_prev ()
+    private function prev ()
     {
         if ($this->page != 1) {
             return "<a href='" . $this->page_replace($this->page - 1) . "' title='上一页'>上一页</a>";
@@ -96,7 +96,7 @@ class page
     }
 
     //下一页
-    private function myde_next ()
+    private function next ()
     {
         if ($this->page != $this->page_count) {
             return "<a href='" . $this->page_replace($this->page + 1) . "' title='下一页'>下一页</a>";
@@ -106,7 +106,7 @@ class page
     }
 
     //尾页
-    private function myde_last ()
+    private function last ()
     {
         if ($this->page != $this->page_count) {
             return "<a href='" . $this->page_replace($this->page_count) . "' title='尾页'>尾页</a>";
@@ -116,11 +116,11 @@ class page
     }
 
     //输出
-    public function myde_write ($id = 'page')
+    public function write ($id = 'page')
     {
         $str = "<div id=" . $id . ">";
-        $str .= $this->myde_home();
-        $str .= $this->myde_prev();
+        $str .= $this->home();
+        $str .= $this->prev();
         if ($this->start_page > 1) {
             $str .= "<span class='pageEllipsis'>...</span>";
         }
@@ -134,8 +134,8 @@ class page
         if ($this->end_page < $this->page_count) {
             $str .= "<span class='pageEllipsis'>...</span>";
         }
-        $str .= $this->myde_next();
-        $str .= $this->myde_last();
+        $str .= $this->next();
+        $str .= $this->last();
         $str .= "<span class='pageRemark'>共<b>" . $this->page_count .
             "</b>页<b>" . $this->total . "</b>条数据</span>";
         $str .= "</div>";

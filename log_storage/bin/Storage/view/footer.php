@@ -1,6 +1,6 @@
 <div class="panel-footer">
     <!-- 设置显示 -->
-    <?= $ful_html; ?>
+    <?= $func_html; ?>
     <!-- 设置按钮 -->
     <a id="modal-474415" href="#modal-container-474415" role="button" class="btn btn-warning" data-toggle="modal"><i
                 class="glyphicon glyphicon-cog"></i></a>

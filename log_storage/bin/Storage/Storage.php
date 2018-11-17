@@ -191,7 +191,7 @@ class Storage
         /*获取显示功能提示的html*/
         ob_start();
         require_once __DIR__ . "/view/ful.php";
-        $ful_html = ob_get_contents();
+        $func_html = ob_get_contents();
         ob_end_clean();
 
         /*获取panel-heading的html*/
@@ -209,7 +209,7 @@ class Storage
         ob_end_clean();
 
         /*消除资源*/
-        unset($page_html, $data, $panel_html,$ful_html);
+        unset($page_html, $data, $panel_html, $func_html);
 
         echo $html;
     }
@@ -340,7 +340,7 @@ class Storage
             $pageNo,
             "?pageNo={page}&{$page_get}"
         );
-        return $page->myde_write();
+        return $page->write();
     }
 
     /**

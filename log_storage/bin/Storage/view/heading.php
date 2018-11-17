@@ -20,7 +20,7 @@
             <i class="glyphicon glyphicon-refresh"></i>
         </button>
         <!-- 设置显示 -->
-        <?= $ful_html; ?>
+        <?= $func_html; ?>
         <!-- 设置面板 -->
         <div class="modal fade" id="modal-container-474415" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
