@@ -36,16 +36,4 @@ $(function(){
     /*调试查看SQL语句*/
     var str_sql = $("#data_for_sql").text();
     console.log(str_sql);
-    /*定时器每秒更新后台数据*/
-    setInterval(UpdateBackgroundData, 5000);
-
-    /**
-     * ajax更新后台数据
-     * @constructor
-     */
-    function UpdateBackgroundData() {
-        $.get("./bin/Storage/do_log_url.php", {"url":log_url}, function (result) {
-            console.log(result);
-        }, 'json');
-    }
 });
