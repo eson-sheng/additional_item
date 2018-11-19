@@ -196,7 +196,7 @@ class Storage
 
         /*获取显示功能提示的html*/
         ob_start();
-        require_once __DIR__ . "/view/ful.php";
+        require_once __DIR__ . "/view/func.php";
         $func_html = ob_get_contents();
         ob_end_clean();
 
