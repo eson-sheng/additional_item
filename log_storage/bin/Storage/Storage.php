@@ -173,11 +173,9 @@ class Storage
      */
     public function index ()
     {
-        /*同步class内联调用log_analysis后台更新数据*/
-        ob_start();
-        $this->_log_analysis();
-        $json = ob_get_contents();
-        ob_end_clean();
+        /*同步后台数据*/
+        $analysis = new Analysis();
+        $analysis->index();
 
         /*查询所有页面的总条数*/
         $page_for_sql = $this->_get_all_pages_for_sql();
