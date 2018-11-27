@@ -8,6 +8,7 @@
 
 namespace Storage;
 
+use \Analysis\Analysis;
 use PDO;
 
 /**
@@ -174,8 +175,11 @@ class Storage
     public function index ()
     {
         /*同步后台数据*/
-        $analysis = new Analysis();
+        ob_start();
+        $analysis = new Analysis($this->config);
         $analysis->index();
+        $json = ob_get_contents();
+        ob_end_clean();
 
         /*查询所有页面的总条数*/
         $page_for_sql = $this->_get_all_pages_for_sql();
@@ -216,14 +220,6 @@ class Storage
         unset($page_html, $data, $panel_html, $func_html, $json);
 
         echo $html;
-    }
-
-    /**
-     * 同步后台数据
-     */
-    private function _log_analysis ()
-    {
-        require_once __DIR__ . "/../../../log_analysis/runner.php";
     }
 
     /**

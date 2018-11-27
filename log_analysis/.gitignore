@@ -1,7 +1,0 @@
-# 零时日志文件
-/mynote_log/ct.txt
-/mynote_login/ct.txt
-/mynote_request/ct.txt
-*.log
-# 项目独有配置
-runner.my.php
