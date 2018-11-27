@@ -49,7 +49,7 @@ class Basic
     public function init ()
     {
         /*获取当前要分析的文件*/
-        if (!file_exists("{$this->path}")) {
+        if (is_dir("{$this->path}")) {
             $log_path = $this->path . '/' . date('Ymd') . '.log';
         } else {
             $log_path = "{$this->path}";
