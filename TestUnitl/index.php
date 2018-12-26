@@ -88,7 +88,7 @@ class TestUnitl
     private function _send_mail ($msg)
     {
         $rets = [];
-        $subject = "单元测试预警";
+        $subject = "单元测试报警";
         $froms = $this->config['mail']['send'];
         foreach ($froms AS $from) {
             if ($this->config['test_sending_mail_mode']) {
@@ -100,7 +100,7 @@ class TestUnitl
             }
         }
         /*页面方便查看*/
-        $html = '<h3>预警邮件发送状态：</h3>';
+        $html = '<h3>警报邮件发送状态：</h3>';
         $html .= '<ul>';
         foreach ($rets AS $ret) {
             $html .= "<li>";
