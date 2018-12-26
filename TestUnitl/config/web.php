@@ -9,7 +9,9 @@
 return [
     /*域名地址*/
     'api_host_url' => 'http://dev.rongyipiao.com/',
-    /*预警邮件*/
+    /*测试发送邮件模式*/
+    'test_sending_mail_mode' => FALSE,
+    /*报警邮件*/
     'mail' => [
         'from' => [
             /*发送邮件相关配置*/

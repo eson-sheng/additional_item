@@ -29,6 +29,7 @@ class TestUnitl
 
     /**
      * 入口调用方法
+     * @throws phpmailerException
      */
     function index ()
     {
@@ -90,12 +91,14 @@ class TestUnitl
         $subject = "单元测试预警";
         $froms = $this->config['mail']['send'];
         foreach ($froms AS $from) {
-            /*发送邮件*/
-            $rets[] = $this->_send($from, $subject, $msg);
-            /*测试假装发邮件*/
-//            $rets[] = $this->_send_test($from);
+            if ($this->config['test_sending_mail_mode']) {
+                /*测试假装发邮件*/
+                $rets[] = $this->_send_test($from);
+            } else {
+                /*发送邮件*/
+                $rets[] = $this->_send($from, $subject, $msg);
+            }
         }
-
         /*页面方便查看*/
         $html = '<h3>预警邮件发送状态：</h3>';
         $html .= '<ul>';
@@ -169,4 +172,8 @@ class TestUnitl
 }
 
 $obj = new TestUnitl();
-$obj->index();
+try {
+    $obj->index();
+} catch (phpmailerException $e) {
+    print_r($e);
+}
