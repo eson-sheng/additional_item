@@ -22,10 +22,10 @@ class StackTest extends TestCase
         session_start();
     }
 
-    public function __destruct ()
+    public static function tearDownAfterClass ()
     {
         /*启动会话*/
-        session_start();
+        session_destroy();
     }
 
     /**
@@ -125,7 +125,7 @@ class StackTest extends TestCase
         $curl->http_post($url, $param);
         $info = json_decode($curl->tmp_info, TRUE);
 //        $this->echo_html($url, $param, $info);
-        $this->assertEquals(4, count($info));
+        $this->assertEquals(-1111, $info['errno']);
     }
 
     /**
@@ -162,7 +162,15 @@ class StackTest extends TestCase
      */
     public function testCurlArticleLunbotuAdd ()
     {
-        $this->markTestSkipped('123');
+//        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleLunbotuAdd']['url']}";
+//        $param = $this->config['api_ArticleLunbotuAdd']['param'];
+//        $curl = new Curltool();
+//        $curl->http_post($url, $param);
+//        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+//        $this->assertEquals(200, $info['errno']);
+
+        $this->markTestSkipped();
     }
 
     /**
@@ -190,6 +198,51 @@ class StackTest extends TestCase
         $info = json_decode($curl->tmp_info, TRUE);
 //        $this->echo_html($url, [], $info);
         $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 文章评论添加
+     * @requires 添加接口跳过
+     */
+    public function testCurlCommentAdd ()
+    {
+//        $url = "{$this->config['api_host_url']}{$this->config['api_CommentAdd']['url']}";
+//        $param = $this->config['api_CommentAdd']['param'];
+//        $curl = new Curltool();
+//        $curl->http_post($url, $param);
+//        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+//        $this->assertEquals(200, $info['errno']);
+
+        $this->markTestSkipped();
+    }
+
+    /**
+     * 文章评论查看
+     */
+    public function testCurlCommentShow ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_CommentShow']['url']}";
+        $param = $this->config['api_CommentShow']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 评论点赞
+     */
+    public function testCurlCommentLike ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_CommentLike']['url']}";
+        $param = $this->config['api_CommentLike']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(-1111, $info['errno']);
     }
 
     /**

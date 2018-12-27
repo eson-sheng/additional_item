@@ -110,5 +110,33 @@ return [
     'api_ArticleCatalog' => [
         'url' => 'api/article/catalog?pageNo=2'
     ],
+    /*文章评论添加*/
+    'api_CommentAdd' => [
+        'url' => 'api/comment/add',
+        'param' => [
+            'comment_id' => 0,
+            'user_id' => 1,
+            'aid' => 352,
+            'content' => 'PHPUntil',
+            'nickname' => 'eson',
+            'source_id' => 0,
+            'floor' => 0
+        ]
+    ],
+    /*文章评论查看*/
+    'api_CommentShow' => [
+        'url' => 'api/comment/show',
+        'param' => [
+            'aid' => 352,
+            'num' => 0,
+        ]
+    ],
+    /*评论点赞*/
+    'api_CommentLike' => [
+        'url' => 'api/comment/like',
+        'param' => [
+            'cid' => 55
+        ]
+    ],
     /**/
 ];
