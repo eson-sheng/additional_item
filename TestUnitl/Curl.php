@@ -52,7 +52,8 @@ class Curltool
             $bool = FALSE;
         }
 
-        curl_close($curl); // 关闭CURL会话资源释放
+        /*关闭CURL会话资源释放*/
+        curl_close($curl);
 
         return $bool;
     }
@@ -97,7 +98,8 @@ class Curltool
             $bool = FALSE;
         }
 
-        curl_close($curl); // 关闭CURL会话资源释放
+        /*关闭CURL会话资源释放*/
+        curl_close($curl);
 
         return $bool;
     }

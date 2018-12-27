@@ -39,5 +39,76 @@ return [
         'url' => 'api/user/logout',
         'param' => []
     ],
+    /*文章推荐*/
+    'api_ArticleRecommend' => [
+        'url' => 'api/article/recommend',
+        'param' => [
+            'num' => 0,
+        ]
+    ],
+    /*获取用户文章目录*/
+    'api_ArticleShowlist' => [
+        'url' => 'api/article/showlist',
+        'param' => [
+            'username' => '1092917203',
+        ]
+    ],
+    /*获取文章详情页*/
+    'api_ArticleShow' => [
+        'url' => 'api/article/show',
+        'param' => [
+            'id' => 352,
+        ]
+    ],
+    /*文章浏览量记录*/
+    'api_ArticleAddpv' => [
+        'url' => 'api/article/addpv',
+        'param' => [
+            'aid' => 352,
+            'uid' => 1,
+            'ip' => '127.0.0.1',
+            'referer' => 'http://shengxuecheng.cn/',
+        ]
+    ],
+    /*文章点赞*/
+    'api_ArticleLike' => [
+        'url' => 'api/article/like',
+        'param' => [
+            'aid' => 352
+        ]
+    ],
+    /*文章附录信息*/
+    'api_ArticleInfo' => [
+        'url' => 'api/article/info',
+        'param' => [
+            'aid' => 352
+        ]
+    ],
+    /*轮播图推荐*/
+    'api_ArticleLunbotu' => [
+        'url' => 'api/article/lunbotu',
+        'param' => [
+        ]
+    ],
+    /*轮播图添加*/
+    'api_ArticleLunbotuAdd' => [
+        'url' => 'api/article/lunbotuadd',
+        'param' => [
+            'id' => 0,
+            'imgsrc' => '1',
+            'href' => '1',
+        ]
+    ],
+    /*文章统计汇总*/
+    'api_ArticleCount' => [
+        'url' => 'api/article/count',
+        'param' => [
+            'a' => 'a'
+        ]
+    ],
+    /*文章索引*/
+    'api_ArticleCatalog' => [
+        'url' => 'api/article/catalog?pageNo=2'
+    ],
     /**/
 ];
