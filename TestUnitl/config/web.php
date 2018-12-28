@@ -138,5 +138,60 @@ return [
             'cid' => 55
         ]
     ],
-    /**/
+    /*获取hash版本号*/
+    'api_MarkdownVersion' => [
+        'url' => 'api/markdown/version',
+        'param' => []
+    ],
+    /*发送md文章*/
+    /*add*//*注意version参数需要依赖api_MarkdownVersion的返回值*/
+    'api_MarkdownRelease_add' => [
+        'url' => 'api/markdown/release',
+        'param' => [
+            'aid' => '',
+            'main' => 'PHPUntil add',
+            'path' => './PHPUntil.md',
+            'mod' => 'add',
+        ]
+    ],
+    /*修改md文章*/
+    /*edit*//*注意version&aid参数需要依赖api_MarkdownRelease_add的返回值*/
+    'api_MarkdownRelease_edit' => [
+        'url' => 'api/markdown/release',
+        'param' => [
+            'main' => 'PHPUntil edit',
+            'path' => './PHPUntil.md',
+            'mod' => 'edit',
+        ]
+    ],
+    /*重命名md文章*/
+    /*rename*//*注意version参数需要依赖api_MarkdownRelease_edit的返回值*/
+    'api_MarkdownRename' => [
+        'url' => 'api/markdown/rename',
+        'param' => [
+            'old_name' => './PHPUntil.md',
+            'new_name' => './PHPUntilRename.md'
+        ]
+    ],
+    /*创建md文件夹目录*/
+    /*adddir*//*注意version参数需要依赖api_MarkdownRename的返回值*/
+    'api_MarkdownDirAdd' => [
+        'url' => 'api/markdown/diradd',
+        'param' => [
+            'dir_path' => './a/b/c/test',
+            'base_path' => './a/b/c/',
+            'dir_name' => 'test'
+        ]
+    ],
+    /*删除md文章*/
+    /*del*//*注意version参数需要依赖api_MarkdownRename的返回值*/
+    'api_MarkdownDel' => [
+        'url' => 'api/markdown/del',
+        'param' => [
+            'paths' => [
+                './PHPUntilRename.md',
+                './a/b/c/test/__create_dir.md'
+            ]
+        ]
+    ],
 ];

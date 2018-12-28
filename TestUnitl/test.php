@@ -162,15 +162,15 @@ class StackTest extends TestCase
      */
     public function testCurlArticleLunbotuAdd ()
     {
-//        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleLunbotuAdd']['url']}";
-//        $param = $this->config['api_ArticleLunbotuAdd']['param'];
-//        $curl = new Curltool();
-//        $curl->http_post($url, $param);
-//        $info = json_decode($curl->tmp_info, TRUE);
-//        $this->echo_html($url, $param, $info);
-//        $this->assertEquals(200, $info['errno']);
-
         $this->markTestSkipped();
+
+        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleLunbotuAdd']['url']}";
+        $param = $this->config['api_ArticleLunbotuAdd']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
     }
 
     /**
@@ -206,15 +206,15 @@ class StackTest extends TestCase
      */
     public function testCurlCommentAdd ()
     {
-//        $url = "{$this->config['api_host_url']}{$this->config['api_CommentAdd']['url']}";
-//        $param = $this->config['api_CommentAdd']['param'];
-//        $curl = new Curltool();
-//        $curl->http_post($url, $param);
-//        $info = json_decode($curl->tmp_info, TRUE);
-//        $this->echo_html($url, $param, $info);
-//        $this->assertEquals(200, $info['errno']);
-
         $this->markTestSkipped();
+
+        $url = "{$this->config['api_host_url']}{$this->config['api_CommentAdd']['url']}";
+        $param = $this->config['api_CommentAdd']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
     }
 
     /**
@@ -243,6 +243,123 @@ class StackTest extends TestCase
         $info = json_decode($curl->tmp_info, TRUE);
 //        $this->echo_html($url, $param, $info);
         $this->assertEquals(-1111, $info['errno']);
+    }
+
+    /**
+     * 获取hash版本号
+     */
+    public function testCurlForMarkdownVersion ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_MarkdownVersion']['url']}";
+        $param = $this->config['api_MarkdownVersion']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+
+        return $info;
+    }
+
+    /**
+     * 发送md文章
+     * @depends testCurlForMarkdownVersion
+     * @param array $stack
+     * @return mixed
+     */
+    public function testCurlForMarkdownReleaseAdd (array $stack)
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_MarkdownRelease_add']['url']}";
+        $param = $this->config['api_MarkdownRelease_add']['param'];
+        $param['version'] = $stack['data'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+
+        return $info;
+    }
+
+    /**
+     * 修改md文章
+     * @depends testCurlForMarkdownReleaseAdd
+     * @param array $stack
+     * @return mixed
+     */
+    public function testCurlForMarkdownReleaseEdit (array $stack)
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_MarkdownRelease_edit']['url']}";
+        $param = $this->config['api_MarkdownRelease_edit']['param'];
+        $param['version'] = $stack['data']['version'];
+        $param['aid'] = $stack['data']['aid'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+
+        return $info;
+    }
+
+    /**
+     * 重命名md文章
+     * @depends testCurlForMarkdownReleaseEdit
+     * @param array $stack
+     * @return mixed
+     */
+    public function testCurlForMarkdownRename (array $stack)
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_MarkdownRename']['url']}";
+        $param = $this->config['api_MarkdownRename']['param'];
+        $param['version'] = $stack['data']['version'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+
+        return $info;
+    }
+
+    /**
+     * 创建md文件夹目录
+     * @depends testCurlForMarkdownRename
+     * @param array $stack
+     * @return mixed
+     */
+    public function testCurlForMarkdownDirAdd (array $stack)
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_MarkdownDirAdd']['url']}";
+        $param = $this->config['api_MarkdownDirAdd']['param'];
+        $param['version'] = $stack['data']['version'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+
+        return $info;
+    }
+
+    /**
+     * 删除md文章
+     * @depends testCurlForMarkdownDirAdd
+     * @param array $stack
+     * @return mixed
+     */
+    public function testCurlMarkdownDel (array $stack)
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_MarkdownDel']['url']}";
+        $param = $this->config['api_MarkdownDel']['param'];
+        $param['version'] = $stack['data']['version'];
+        $curl = new Curltool();
+        $curl->http_post($url, http_build_query($param));
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+
+        return $info;
     }
 
     /**
