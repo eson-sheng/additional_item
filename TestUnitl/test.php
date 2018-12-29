@@ -3,6 +3,10 @@ require_once __DIR__ . "/Curl.php";
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @method markTestSkipped()
+ * @method assertEquals($int, $errno)
+ */
 class StackTest extends TestCase
 {
     public $config = NULL;
@@ -75,10 +79,10 @@ class StackTest extends TestCase
     /**
      * 获取用户文章目录
      */
-    public function testCurlForArticleShowlist ()
+    public function testCurlForArticleShowList ()
     {
-        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleShowlist']['url']}";
-        $param = $this->config['api_ArticleShowlist']['param'];
+        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleShowList']['url']}";
+        $param = $this->config['api_ArticleShowList']['param'];
         $curl = new Curltool();
         $curl->http_post($url, $param);
         $info = json_decode($curl->tmp_info, TRUE);
@@ -169,7 +173,7 @@ class StackTest extends TestCase
         $curl = new Curltool();
         $curl->http_post($url, $param);
         $info = json_decode($curl->tmp_info, TRUE);
-        $this->echo_html($url, $param, $info);
+//        $this->echo_html($url, $param, $info);
         $this->assertEquals(200, $info['errno']);
     }
 
@@ -213,7 +217,7 @@ class StackTest extends TestCase
         $curl = new Curltool();
         $curl->http_post($url, $param);
         $info = json_decode($curl->tmp_info, TRUE);
-        $this->echo_html($url, $param, $info);
+//        $this->echo_html($url, $param, $info);
         $this->assertEquals(200, $info['errno']);
     }
 

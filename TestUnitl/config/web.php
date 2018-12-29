@@ -47,7 +47,7 @@ return [
         ]
     ],
     /*获取用户文章目录*/
-    'api_ArticleShowlist' => [
+    'api_ArticleShowList' => [
         'url' => 'api/article/showlist',
         'param' => [
             'username' => '1092917203',
@@ -194,4 +194,7 @@ return [
             ]
         ]
     ],
+    /*消息模块 - 尚未完成*/
+    /*用户模块*/
+    /*用户中心模块*/
 ];
