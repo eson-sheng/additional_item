@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @method markTestSkipped()
  * @method assertEquals($int, $errno)
+ * @method markTestIncomplete()
  */
 class StackTest extends TestCase
 {
@@ -23,7 +24,7 @@ class StackTest extends TestCase
         }
         $this->config = $config;
         /*启动会话*/
-        session_start();
+        @session_start();
     }
 
     public static function tearDownAfterClass ()
@@ -367,6 +368,266 @@ class StackTest extends TestCase
     }
 
     /**
+     * 发送消息
+     */
+    public function testCurlMessageSend ()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * 查看消息
+     */
+    public function testCurlMessageShow ()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * 消息状态修改
+     */
+    public function testCurlMessageState ()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * 消息状态批量修改
+     */
+    public function testCurlMessageStates ()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * 举报信息
+     * @requires 添加接口跳过
+     */
+    public function testCurlReport ()
+    {
+        $this->markTestSkipped();
+
+        $url = "{$this->config['api_host_url']}{$this->config['api_Report']['url']}";
+        $param = $this->config['api_Report']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 验证码
+     */
+    public function testCurlVcode ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_VcodeTmp']['url']}";
+        $curl = new Curltool();
+        $curl->http_get($url);
+        $this->assertEquals(200, $curl->http_code);
+
+        return ($this->_GetRedisForSessionArr());
+    }
+
+    /**
+     * 电话号码注册
+     */
+    public function testCurlUserTelregister ()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * 发送手机验证码
+     */
+    public function testCurlUserTelCode ()
+    {
+        $stack = $this->testCurlVcode();
+
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserTelCode']['url']}";
+        $param = $this->config['api_UserTelCode']['param'];
+        $param['vcode'] = $stack['vcode'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 电子邮箱注册
+     */
+    public function testCurlUserEmailregister ()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /**
+     * 发送邮箱验证码
+     */
+    public function testCurlEmailcode ()
+    {
+        $stack = $this->testCurlVcode();
+
+        $url = "{$this->config['api_host_url']}{$this->config['api_Emailcode']['url']}";
+        $param = $this->config['api_Emailcode']['param'];
+        $param['vcode'] = $stack['vcode'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * gogs密码修改
+     * @requires 基境问题
+     */
+    public function testCurlUserGogspass ()
+    {
+        $this->markTestSkipped();
+
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserGogspass']['url']}";
+        $param = $this->config['api_UserGogspass']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 前后端同步登陆session
+     */
+    public function testCurlForUserSynchrodata ()
+    {
+        $session = $this->_GetRedisForSessionArr();
+        $hash = $this->_AES($session);
+
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserSynchrodata']['url']}";
+        $param = $this->config['api_UserSynchrodata']['param'];
+        $param['data'] = $hash;
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 昵称修改
+     */
+    public function testCurlForUserNick ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoNick']['url']}";
+        $param = $this->config['api_UserinfoNick']['param'];
+        $param['nick'] = $this->_GetChangeNick();
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 头像修改
+     */
+    public function testCurlForUserPic ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoPic']['url']}";
+        $param = $this->config['api_UserinfoPic']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 作者推荐
+     */
+    public function testCurlForUserinfoRecommend ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoRecommend']['url']}";
+        $param = $this->config['api_UserinfoRecommend']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 换一换作者推荐
+     */
+    public function testCurlForUserinfoChange ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoChange']['url']}";
+        $param = $this->config['api_UserinfoChange']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 所有作者查看
+     */
+    public function testCurlForUserinfoAllrecommend ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoAllrecommend']['url']}";
+        $param = $this->config['api_UserinfoAllrecommend']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 模糊匹配作者查询
+     */
+    public function testCurlForUserinfoLookup ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoLookup']['url']}";
+        $param = $this->config['api_UserinfoLookup']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 作者关注
+     */
+    public function testCurlForUserinfoFollow ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoFollow']['url']}";
+        $param = $this->config['api_UserinfoFollow']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 获取关注信息
+     */
+    public function testCurlForUserinfoGetfollow ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserinfoGetfollow']['url']}";
+        $param = $this->config['api_UserinfoGetfollow']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
      * 退出登录接口测试
      */
     public function testCurlForLogout ()
@@ -378,5 +639,54 @@ class StackTest extends TestCase
         $info = json_decode($curl->tmp_info, TRUE);
 //        $this->echo_html($url, $param, $info);
         $this->assertEquals(4, count($info));
+    }
+
+    /*获取redis中的session数据*/
+    private function _GetRedisForSessionArr ()
+    {
+        $redis = new Redis();
+        $redis->connect(
+            $this->config['redis']['host'],
+            $this->config['redis']['port']
+        );
+        $session = $redis->get("PHPREDIS_SESSION:" . session_id());
+        return unserialize(ltrim($session, "web|"));
+    }
+
+    /*获取昵称与上次不重复*/
+    private function _GetChangeNick ()
+    {
+        $tmp_nick = 'eson' . rand(0, 1);
+        $nick = $this->_GetRedisForSessionArr()['user_info']['nick'];
+        if ($tmp_nick != $nick) {
+            return $tmp_nick;
+        } else {
+            return $this->_GetChangeNick();
+        }
+    }
+
+    /**
+     * 对称加密方式
+     * @param $session
+     * @return string
+     */
+    private function _AES ($session)
+    {
+        unset($session['user_info']['message_bool']);
+        unset($session['user_info']['nick']);
+        unset($session['user_info']['mobile']);
+        unset($session['user_info']['email']);
+        unset($session['user_info']['pic']);
+        $data = $session['user_info'];
+        // 所有请求参数按照字母先后顺序排
+        ksort($data);
+        //把所有参数名和参数值串在一起
+        $str = "";
+        foreach ($data as $k => $v) {
+            $str .= urldecode($k . $v);
+        }
+        unset($k, $v);
+        $str .= $this->config['cookieValidationKey'];
+        return strtoupper(sha1($str));
     }
 }
