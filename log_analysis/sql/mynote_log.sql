@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `mynote_log` (
   `filename` varchar(100) DEFAULT NULL,
   `reqnum` varchar(20) DEFAULT NULL,
   `message` text,
-  `logger` varchar(10) NOT NULL
+  `logger` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `mynote_log`
