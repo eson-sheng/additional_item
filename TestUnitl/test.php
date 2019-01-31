@@ -41,12 +41,13 @@ class StackTest extends TestCase
      */
     public function echo_html ($url, $param, $info)
     {
+        echo "<div style=\"border:1px solid lightskyblue\">";
         echo "<br>url: {$url}";
         echo "<br>param: " . http_build_query($param);
         echo "<br>return:";
         echo "<pre>";
         print_r($info);
-        echo "</pre><hr>";
+        echo "</pre></div><hr>";
     }
 
     /**
@@ -84,6 +85,20 @@ class StackTest extends TestCase
     {
         $url = "{$this->config['api_host_url']}{$this->config['api_ArticleShowList']['url']}";
         $param = $this->config['api_ArticleShowList']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 获取用户当前文章列表简介
+     */
+    public function testCurlForArticleList ()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleList']['url']}";
+        $param = $this->config['api_ArticleList']['param'];
         $curl = new Curltool();
         $curl->http_post($url, $param);
         $info = json_decode($curl->tmp_info, TRUE);
@@ -203,6 +218,52 @@ class StackTest extends TestCase
         $info = json_decode($curl->tmp_info, TRUE);
 //        $this->echo_html($url, [], $info);
         $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 获取文章标签
+     */
+    public function testCurlArticleGetag()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleGetag']['url']}";
+        $param = $this->config['api_ArticleGetag']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 获取常用标签
+     */
+    public function testCurlArticleGetags()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_ArticleGetags']['url']}";
+        $param = $this->config['api_ArticleGetags']['param'];
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 添加文章标签
+     * @requires 添加接口跳过
+     */
+    public function testCurlArticleAddtag()
+    {
+        $this->markTestSkipped();
+    }
+
+    /**
+     * 删除文章标签
+     * @requires 基境删除接口跳过
+     */
+    public function testCurlArticleDeltag()
+    {
+        $this->markTestSkipped();
     }
 
     /**
@@ -480,6 +541,32 @@ class StackTest extends TestCase
     }
 
     /**
+     * 检查用户信息是否正确
+     */
+    public function testCurlUserCheckout()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserCheckout']['url']}";
+        $param = $this->config['api_UserCheckout']['param'];
+        /*特殊参数获取*/
+        $redis = new Redis();
+        $redis->connect('127.0.0.1', 6379);
+        $redis->auth('');
+
+        $email = '834767372@qq.com';
+        $code = $redis->get($email);
+
+        $param['type'] = 'email';
+        $param['code'] = $code;
+        $param['number'] = $email;
+
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
      * gogs密码修改
      * @requires 基境问题
      */
@@ -507,6 +594,20 @@ class StackTest extends TestCase
         $url = "{$this->config['api_host_url']}{$this->config['api_UserSynchrodata']['url']}";
         $param = $this->config['api_UserSynchrodata']['param'];
         $param['data'] = $hash;
+        $curl = new Curltool();
+        $curl->http_post($url, $param);
+        $info = json_decode($curl->tmp_info, TRUE);
+//        $this->echo_html($url, $param, $info);
+        $this->assertEquals(200, $info['errno']);
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public function testCurlForUserGetuserinfo()
+    {
+        $url = "{$this->config['api_host_url']}{$this->config['api_UserGetuserinfo']['url']}";
+        $param = $this->config['api_UserGetuserinfo']['param'];
         $curl = new Curltool();
         $curl->http_post($url, $param);
         $info = json_decode($curl->tmp_info, TRUE);

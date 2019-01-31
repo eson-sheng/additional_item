@@ -63,6 +63,13 @@ return [
             'username' => '1092917203',
         ]
     ],
+    /*获取用户当前文章列表简介*/
+    'api_ArticleList' => [
+        'url' => 'api/article/list',
+        'param' => [
+            'page' => '1',
+        ]
+    ],
     /*获取文章详情页*/
     'api_ArticleShow' => [
         'url' => 'api/article/show',
@@ -119,6 +126,18 @@ return [
     /*文章索引*/
     'api_ArticleCatalog' => [
         'url' => 'api/article/catalog?pageNo=2'
+    ],
+    /*获取文章标签*/
+    'api_ArticleGetag' => [
+        'url' => 'api/article/getag',
+        'param' => [
+            'id' => '662'
+        ]
+    ],
+    /*获取常用标签*/
+    'api_ArticleGetags' => [
+        'url' => 'api/article/getags',
+        'param' => []
     ],
     /*评论模块*/
     /*文章评论添加*/
@@ -255,6 +274,16 @@ return [
         'param' => [
             'email' => '834767372@qq.com'
         ]
+    ],
+    /*检查用户信息是否正确*/
+    'api_UserCheckout' => [
+        'url' => 'api/user/checkout',
+        'param' => []
+    ],
+    /*获取用户信息*/
+    'api_UserGetuserinfo' => [
+        'url' => 'api/user/getuserinfo',
+        'param' => []
     ],
     /*gogs密码修改*//*基境问题------------------*/
     'api_UserGogspass' => [
