@@ -31,8 +31,8 @@
                                     <!-- 毫秒时间戳显示 -->
                                     <?php if ($k === '记录时间' && $v): ?>
                                         <td>
-                                            <?= date("Y-m-d H:i:s", intval($v)); ?>
-                                            <?= substr($v, 11, 15); ?>
+                                            <?php date("Y-m-d H:i:s", intval($v)); ?>
+                                            <?php substr($v, 11, 15); ?>
                                             <?= $v; ?>
                                         </td>
                                     <?php else: ?>
