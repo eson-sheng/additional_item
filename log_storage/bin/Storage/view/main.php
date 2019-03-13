@@ -22,7 +22,6 @@
 </body>
 <script type="text/javascript">
     var request_id_value = '<?= $this->request_max_id; ?>';
-    var log_url = '<?= $this->config['log_url']; ?>';
     var default_time = "<?= date("Y-m-d\TH:i",intval($this->default_time)); ?>";
 </script>
 <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
