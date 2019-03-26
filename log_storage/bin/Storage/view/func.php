@@ -7,7 +7,7 @@
     <strong>请求耗时超标设置：</strong>
     <small><span class='tip'><?= $this->key_time_out_value; ?>s</span></small> &nbsp;&nbsp;
     <strong>请求时间范围搜索：</strong> <em>开始 - </em>
-    <small><?= !empty($_GET['log_datetime_start']) ? "<span class='tip'>" . date("Y-m-d H:i:s", strtotime($_GET['log_datetime_start'])) . "</span>" : "<span class='tip'>{$this->default_time_show}</span>"; ?></small>
+    <small><?= !empty($_GET['log_datetime_start']) ? "<span class='tip'>" . date("Y-m-d H:i:s", strtotime($_GET['log_datetime_start'])) . "</span>" : "<span class='tip'></span>"; ?></small>
     <em>结束 - </em>
     <small><?= $this->log_datetime_end ? "<span class='tip'>" . date("Y-m-d H:i:s", strtotime($_GET['log_datetime_end'])) . "</span>" : '未设置'; ?></small>
     &nbsp;&nbsp;

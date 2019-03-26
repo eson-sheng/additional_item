@@ -10,3 +10,4 @@ config_my.php
 
 *.my.php
 /log_storage/logs/*.txt
+/log_analysis/logs
