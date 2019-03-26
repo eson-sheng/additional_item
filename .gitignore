@@ -9,3 +9,4 @@ config_my.php
 /log_analysis/*.log
 
 *.my.php
+/log_storage/logs/*.txt
