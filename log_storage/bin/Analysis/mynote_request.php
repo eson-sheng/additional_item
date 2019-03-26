@@ -70,12 +70,13 @@ class mynote_request extends Basic
             }
 
             if (empty($data['time'])) {
+                $data_REQUEST_URI = addslashes($data["REQUEST_URI"]);
                 $sql = "
                 insert into 
                 `$tbname` (`reqnum`,`uri`,`sessionid`,`params`,`req_time`) " .
                     "values (
                 '{$data['rnum']}',
-                '{$data["REQUEST_URI"]}',
+                '{$data_REQUEST_URI}',
                 '{$data['PHPSESSID']}',
                 '{$data['params']}',
                 '{$data['req_time']}');";
